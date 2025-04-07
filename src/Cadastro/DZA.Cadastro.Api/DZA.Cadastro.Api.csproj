@@ -26,4 +26,8 @@
     <ProjectReference Include="..\DZA.Cadastro.Infra.Data\DZA.Cadastro.Infra.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+  </ItemGroup>
+
 </Project>
