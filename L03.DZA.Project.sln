@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1AB771ED-51FF-4D4D-BFCA-D49C568D8253}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{39BC9BD8-4127-4D45-B93D-B7611ABAD3C0}"
+	ProjectSection(SolutionItems) = preProject
+		src\Assets\Logo_IDN_DEV_Sem_Fundo.png = src\Assets\Logo_IDN_DEV_Sem_Fundo.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cadastro", "Cadastro", "{27848BA9-948F-4D02-BEF9-281D8AF3A9DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CAA3D991-FA04-4F08-B4CD-3BF522627E2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{3E219337-6788-4EB0-9503-D7A81FC9F522}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{EDD631EA-F1EE-4ED7-AC1A-F705458F4CA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DZA.Core", "src\Core\DZA.Core\DZA.Core.csproj", "{50708CF7-5699-462F-881A-CA3789367F49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DZA.Cadastro.Domain", "src\Cadastro\DZA.Cadastro.Domain\DZA.Cadastro.Domain.csproj", "{B14EBB3A-1092-41A9-82C7-52893A817F4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DZA.Cadastro.Infra.Data", "src\Cadastro\DZA.Cadastro.Infra.Data\DZA.Cadastro.Infra.Data.csproj", "{543BA57C-B069-410D-BFB6-364D306B032E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DZA.Cadastro.Application", "src\Cadastro\DZA.Cadastro.Application\DZA.Cadastro.Application.csproj", "{0FB20B31-7196-41CC-B48B-E57BD4A04CF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50708CF7-5699-462F-881A-CA3789367F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50708CF7-5699-462F-881A-CA3789367F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50708CF7-5699-462F-881A-CA3789367F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50708CF7-5699-462F-881A-CA3789367F49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B14EBB3A-1092-41A9-82C7-52893A817F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B14EBB3A-1092-41A9-82C7-52893A817F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B14EBB3A-1092-41A9-82C7-52893A817F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B14EBB3A-1092-41A9-82C7-52893A817F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543BA57C-B069-410D-BFB6-364D306B032E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543BA57C-B069-410D-BFB6-364D306B032E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543BA57C-B069-410D-BFB6-364D306B032E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543BA57C-B069-410D-BFB6-364D306B032E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FB20B31-7196-41CC-B48B-E57BD4A04CF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FB20B31-7196-41CC-B48B-E57BD4A04CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FB20B31-7196-41CC-B48B-E57BD4A04CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FB20B31-7196-41CC-B48B-E57BD4A04CF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{39BC9BD8-4127-4D45-B93D-B7611ABAD3C0} = {1AB771ED-51FF-4D4D-BFCA-D49C568D8253}
+		{27848BA9-948F-4D02-BEF9-281D8AF3A9DA} = {1AB771ED-51FF-4D4D-BFCA-D49C568D8253}
+		{CAA3D991-FA04-4F08-B4CD-3BF522627E2F} = {1AB771ED-51FF-4D4D-BFCA-D49C568D8253}
+		{3E219337-6788-4EB0-9503-D7A81FC9F522} = {1AB771ED-51FF-4D4D-BFCA-D49C568D8253}
+		{EDD631EA-F1EE-4ED7-AC1A-F705458F4CA0} = {1AB771ED-51FF-4D4D-BFCA-D49C568D8253}
+		{50708CF7-5699-462F-881A-CA3789367F49} = {CAA3D991-FA04-4F08-B4CD-3BF522627E2F}
+		{B14EBB3A-1092-41A9-82C7-52893A817F4D} = {27848BA9-948F-4D02-BEF9-281D8AF3A9DA}
+		{543BA57C-B069-410D-BFB6-364D306B032E} = {27848BA9-948F-4D02-BEF9-281D8AF3A9DA}
+		{0FB20B31-7196-41CC-B48B-E57BD4A04CF5} = {27848BA9-948F-4D02-BEF9-281D8AF3A9DA}
+	EndGlobalSection
+EndGlobal
