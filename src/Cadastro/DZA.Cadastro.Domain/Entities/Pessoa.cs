@@ -4,7 +4,7 @@ namespace DZA.Cadastro.Domain.Entities;
 
 public class Pessoa : EntityBase, IAggregateRoot
 {
-    public Guid DepartamentoId { get; private set; }
+    public Guid? DepartamentoId { get; private set; }
     public string Nome { get; private set; }
     public string SobreNome { get; private set; }
     public int Idade { get; private set; }
@@ -13,7 +13,7 @@ public class Pessoa : EntityBase, IAggregateRoot
     public Pessoa()
     { }
 
-    public Pessoa(Guid departamentoId, string nome, string sobreNome, int idade)
+    public Pessoa(Guid? departamentoId, string nome, string sobreNome, int idade)
     {
         DepartamentoId = departamentoId;
         Nome = nome;
