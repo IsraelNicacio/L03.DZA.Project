@@ -1,0 +1,37 @@
+services:
+
+    dza03_data_base:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        container_name: dza03_data_base
+        expose:
+            - 1433
+        restart: always
+        ports:
+            - "1434:1433"
+        environment:
+            SA_PASSWORD: "#sa123456"
+            ACCEPT_EULA: "Y" 
+            MSSQL_PID: "Express"
+        networks:
+            - dza03-network
+
+    dza03_api:
+        container_name: dza03_api
+        build:
+            context: ./src
+            dockerfile: Dockerfile
+        environment:
+            ASPNETCORE_ENVIRONMENT: Stage
+            ASPNETCORE_HTTP_PORTS: "80"
+            USE_HTTPS_REDIRECTION: "false"
+        restart: always
+        ports:
+            - "8083:80"
+        networks:
+            - dza03-network
+        depends_on:
+            - dza03_data_base
+        
+networks:
+    dza03-network:
+        driver: bridge

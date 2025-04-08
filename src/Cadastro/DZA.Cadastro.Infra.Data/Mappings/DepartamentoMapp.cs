@@ -8,6 +8,8 @@ internal class DepartamentoMapp : IEntityTypeConfiguration<Departamento>
 {
     public void Configure(EntityTypeBuilder<Departamento> builder)
     {
+        builder.HasKey(x => x.Id);
+
         builder.Property(p => p.Nome)
             .IsRequired()
             .HasColumnType("varchar(60)");
