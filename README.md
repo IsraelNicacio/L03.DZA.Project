@@ -4,12 +4,12 @@
 </div>
 
 
-# T�tulo do Projeto
+# Titulo do Projeto
 
 Uma breve descrição sobre o que esse projeto faz e para quem le
 
 
-## Documenta��o da API
+## Documentacao da API
 
 #### Retorna todos os itens
 
@@ -29,7 +29,7 @@ Uma breve descrição sobre o que esse projeto faz e para quem le
 
 | Par�metro   | Tipo       | Descrição                                  |
 | :---------- | :--------- | :------------------------------------------ |
-| `id`      | `string` | **Obrigatório�rio**. O ID do item que você quer |
+| `id`      | `string` | **Obrigatório**. O ID do item que você quer |
 
 #### add(num1, num2)
 
