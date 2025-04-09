@@ -3,10 +3,10 @@ name: Build Project
 on:
     push:
         branches:
-          - main
+          - feature
     pull_request:
         branches:
-          - main
+          - feature
 
 jobs:
     build:
@@ -15,13 +15,14 @@ jobs:
 
         steps:
           - name: Checkout code
-            user: actions/checkout@v4
+            uses: actions/checkout@v4
 
           - name: Setup .Net Core
-            run: actions/setup-dotnet@v4
+            uses: actions/setup-dotnet@v4
             with:
               dotnet-version: '8.x'
 
-          - name: Build Project
-            run: dotnet restore ./L03.DZA.Project.sln
-            run: dotnet build --no-restore ./L03.DZA.Project.sln
+          - name: Build
+            run: | 
+              dotnet restore ./L03.DZA.Project.sln
+              dotnet build --no-restore ./L03.DZA.Project.sln
