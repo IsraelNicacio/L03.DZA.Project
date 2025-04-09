@@ -23,5 +23,6 @@ jobs:
               dotnet-version: '8.x'
 
           - name: Build
-            run: dotnet restore ./L03.DZA.Project.sln
-            run: dotnet build --no-restore ./L03.DZA.Project.sln
+            run: | 
+              dotnet restore ./L03.DZA.Project.sln
+              dotnet build --no-restore ./L03.DZA.Project.sln
