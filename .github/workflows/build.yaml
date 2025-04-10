@@ -28,18 +28,8 @@ jobs:
           release-branch: master
           prefix: v
 
-      - name: Tag do repositorio
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            echo "::notice:: ${{ steps.version.outputs.version }}"
-            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-            git config --global user.name "${{ github.actor }}"
-            git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
-            git push --tags
-        if: github.ref == 'refs/heads/master'    
-
-    build:
+    backend-buils-and-tests:
+        needs: versionamento
         runs-on: ubuntu-latest
         name: Build Project
 
@@ -52,13 +42,46 @@ jobs:
             with:
               dotnet-version: '8.x'
 
-          - name: Build
+          - name: Restore
             run: | 
               dotnet restore ./L03.DZA.Project.sln
-              dotnet build --no-restore ./L03.DZA.Project.sln
-              dotnet test ./L03.DZA.Project.sln --no-restore --no-build --logger trx --results-directory "TestResults"
+
+          - name: Build
+            run: | 
+                dotnet build --no-restore ./L03.DZA.Project.sln
+                dotnet test ./L03.DZA.Project.sln --no-restore --no-build --logger trx --results-directory "TestResults"
+
+          - name: Test
+            run: | 
+                 dotnet test ./L03.DZA.Project.sln --configuration release --no-restore --no-build --logger trx --results-directory "TestResults"
               
           - uses: actions/upload-artifact@v4
             with:
               name: dotnet-test-results
               path: TestResults
+
+    frontend-build-and-test:
+        if: false
+        needs: versionamento
+        runs-on: ubuntu-latest
+        name: Frontend Build and Test
+        defaults:
+          run:
+            working-directory: ./src/web
+
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Set up Node.js
+            uses: actions/setup-node@v4
+            with:
+              node-version: "20"
+              cache: npm
+              cache-dependency-path: ./src/web
+
+          - name: Install dependencies
+            working-directory: ./src/web
+            run:
+              npm install
+              npm run build
