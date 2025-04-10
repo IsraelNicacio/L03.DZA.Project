@@ -17,9 +17,9 @@ Uma breve descrição sobre o que esse projeto faz e para quem le
   GET /api/items
 ```
 
-| Par�metro   | Tipo       | Descrição                          |
-| :---------- | :--------- | :---------------------------------- |
-| `api_key` | `string` | **Obrigatório**. A chave da sua API |
+| Parâmetro   | Tipo       | Obrigatório | Descrição                          |
+| :---------- | :--------- | :--------- |:---------------------------------- |
+| `api_key` | `string` | **Sim** | A chave da sua API |
 
 #### Retorna um item
 
@@ -27,7 +27,7 @@ Uma breve descrição sobre o que esse projeto faz e para quem le
   GET /api/items/${id}
 ```
 
-| Par�metro   | Tipo       | Descrição                                  |
+| Parâmetro   | Tipo       | Descrição                                  |
 | :---------- | :--------- | :------------------------------------------ |
 | `id`      | `string` | **Obrigatório**. O ID do item que você quer |
 
