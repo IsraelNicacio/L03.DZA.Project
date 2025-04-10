@@ -15,6 +15,6 @@ public class TestMock
         var resultado = (2 + 2);
 
         // Assert
-        Assert.AreEqual(4, resultado);
+        Assert.That(resultado, Is.EqualTo(4));
     }
 }
