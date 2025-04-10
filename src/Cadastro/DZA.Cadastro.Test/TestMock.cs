@@ -1,4 +1,6 @@
-﻿namespace DZA.Cadastro.Test;
+﻿using Xunit;
+
+namespace DZA.Cadastro.Test;
 
 
 public class TestMock
