@@ -13,6 +13,6 @@ public class PessoaController : ControllerBase
         => _pessooaService = pessooaService;
 
     [HttpGet("ObterPessoas")]
-    public async Task<IEnumerable<PessoaDTO>> Get()
-    => await _pessooaService.ObterPessoas();
+    public async Task<IEnumerable<PessoaDTO>> Get(){ 
+        return await _pessooaService.ObterPessoas();}
 }
