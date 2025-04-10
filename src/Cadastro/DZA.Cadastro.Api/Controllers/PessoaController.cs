@@ -14,5 +14,5 @@ public class PessoaController : ControllerBase
 
     [HttpGet("ObterPessoas")]
     public async Task<IEnumerable<PessoaDTO>> Get()
-    => await _pessooaService.ObterPessoas();
+        => await _pessooaService.ObterPessoas();
 }
