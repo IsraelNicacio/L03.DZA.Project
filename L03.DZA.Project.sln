@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DZA.Cadastro.Application", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DZA.Cadastro.Api", "src\Cadastro\DZA.Cadastro.Api\DZA.Cadastro.Api.csproj", "{338FC5C6-B33E-4166-AA36-51654E451CD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DZA.Cadastro.Test", "src\Cadastro\DZA.Cadastro.Test\DZA.Cadastro.Test.csproj", "{05935ADB-DA23-42D8-80FC-B0F8A87E2A98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{338FC5C6-B33E-4166-AA36-51654E451CD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{338FC5C6-B33E-4166-AA36-51654E451CD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{338FC5C6-B33E-4166-AA36-51654E451CD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05935ADB-DA23-42D8-80FC-B0F8A87E2A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05935ADB-DA23-42D8-80FC-B0F8A87E2A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05935ADB-DA23-42D8-80FC-B0F8A87E2A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05935ADB-DA23-42D8-80FC-B0F8A87E2A98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,5 +78,6 @@ Global
 		{543BA57C-B069-410D-BFB6-364D306B032E} = {27848BA9-948F-4D02-BEF9-281D8AF3A9DA}
 		{0FB20B31-7196-41CC-B48B-E57BD4A04CF5} = {27848BA9-948F-4D02-BEF9-281D8AF3A9DA}
 		{338FC5C6-B33E-4166-AA36-51654E451CD3} = {27848BA9-948F-4D02-BEF9-281D8AF3A9DA}
+		{05935ADB-DA23-42D8-80FC-B0F8A87E2A98} = {27848BA9-948F-4D02-BEF9-281D8AF3A9DA}
 	EndGlobalSection
 EndGlobal
