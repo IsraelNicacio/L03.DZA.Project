@@ -48,8 +48,7 @@ jobs:
 
           - name: Build
             run: | 
-                dotnet build --no-restore ./L03.DZA.Project.sln
-                dotnet test ./L03.DZA.Project.sln --no-restore --no-build --logger trx --results-directory "TestResults"
+                dotnet build --configuration release --no-restore ./L03.DZA.Project.sln
 
           - name: Test
             run: | 
