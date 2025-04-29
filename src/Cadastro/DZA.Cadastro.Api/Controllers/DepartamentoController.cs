@@ -6,5 +6,5 @@ namespace DZA.Cadastro.Api.Controllers;
 [Route("{tenant}/[controller]")]
 public class DepartamentoController : ControllerBase
 {
-
+    //Aninda nao implementado
 }
