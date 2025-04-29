@@ -152,17 +152,17 @@ jobs:
         packages: read
         actions: read
         contents: read
-      strategy:
-        fail-fast: false
-        matrix:
-          language: [ 'csharp' ]
+
       steps:
         - uses: actions/checkout@v4
         #Vai preparar o analizador de codigo
         - uses: github/codeql-action/init@v3
           name: Initialize CodeQL - Backend
           with:
-            languages: ${{ matrix.language }}
+            languages: csharp
+            build-mode: autobuild
         #COnclui a execucao do analizador
         - uses: github/codeql-action/analyze@v3
           name: Analyze code - Backend
+          with:
+            category: "/language:csharp"
