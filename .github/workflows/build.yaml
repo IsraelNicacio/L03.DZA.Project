@@ -132,6 +132,13 @@ jobs:
     dependency-check:
       needs: versionamento
       runs-on: ubuntu-latest
+      #Permissoes
+      permissions:
+        contents: read
+        #Para o dependency-check adicionar comentarios no pull-request
+        pull-requests: write
       steps:
         - uses: actions/checkout@v4
         - uses: actions/dependency-review-action@v4
+          with:
+            comment-summary-in-pr: always
