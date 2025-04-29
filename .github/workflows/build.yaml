@@ -128,3 +128,10 @@ jobs:
             with:
               name: web
               path: ./src/web/dist
+    
+    dependency-check:
+      needs: versionamento
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/dependency-review-action@v4
