@@ -159,9 +159,6 @@ jobs:
             - name: Backend
               language: csharp
               build-mode: autobuild
-            #- name: Frontend
-              #language: javascript
-              #build-mode: none
 			
       steps:
         - uses: actions/checkout@v4
@@ -172,7 +169,7 @@ jobs:
             languanges: ${{ matrix.language }}
             build-mode: ${{ matrix.build-mode}}
         #COnclui a execucao do analizador
-        - uses: github/codeql-action/analyse@v3
+        - uses: github/codeql-action/analyze@v3
           name: Analize code - ${{ matrix.name }}
           with:
             category: "/language:${{ matrix.language }}"
