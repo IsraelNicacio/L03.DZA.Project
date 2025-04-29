@@ -142,3 +142,37 @@ jobs:
         - uses: actions/dependency-review-action@v4
           with:
             comment-summary-in-pr: always
+    
+    code-security-check:
+      needs: versionamento
+      runs-on: ubuntu-latest
+      permissions:
+        #Escreve eventos, porque se ele encontra algum problema de seguranca ele consegue reporta para o github
+        security-events: write
+        packages: read
+        actions: read
+        contents: read
+
+      strategy:
+        matrix:
+          include:
+            - name: Backend
+              language: csharp
+              build-mode: autobuild
+            #- name: Frontend
+              #language: javascript
+              #build-mode: none
+			
+      steps:
+        - uses: actions/checkout@v4
+        #Vai preparar o analizador de codigo
+        - uses: bithub/codeql-action/init@v3
+          name: Initialize CodeQL - ${{ matrix.name }}
+          with:
+            languanges: ${{ matrix.language }}
+            build-mode: ${{ matrix.build-mode}}
+        #COnclui a execucao do analizador
+        - uses: github/codeql-action/analyse@v3
+          name: Analize code - ${{ matrix.name }}
+          with:
+            category: "/language:${{ matrix.language }}"
