@@ -159,18 +159,16 @@ jobs:
             # Analyzes C# code by automatically detecting a build
             - language: csharp
               build-mode: autobuild
-
-			
       steps:
         - uses: actions/checkout@v4
         #Vai preparar o analizador de codigo
         - uses: github/codeql-action/init@v3
           name: Initialize CodeQL
           with:
-            languages: ${{ matrix.language }}
-            build-mode: ${{ matrix.build-mode}}
+            languages: csharp
+            build-mode: autobuild
         #COnclui a execucao do analizador
         - uses: github/codeql-action/analyze@v3
           name: Analize code
           with:
-            category: "/language:${{ matrix.language }}"
+            category: "/language:csharp"
