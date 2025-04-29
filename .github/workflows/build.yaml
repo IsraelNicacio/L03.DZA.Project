@@ -156,7 +156,10 @@ jobs:
       strategy:
         matrix:
           include:
+<<<<<<< HEAD
             # Analyzes C# code by automatically detecting a build
+=======
+>>>>>>> 919bad5702f28b3884fafe29e2edaea67c556545
             - language: csharp
               build-mode: autobuild
 			
