@@ -153,16 +153,26 @@ jobs:
         actions: read
         contents: read
 
+      strategy:
+        matrix:
+          include:
+            - name: Backend
+              language: csharp
+              build-mode: autobuild
+            #- name: Frontend
+              #language: javascript
+              #build-mode: none
+			
       steps:
         - uses: actions/checkout@v4
         #Vai preparar o analizador de codigo
-        - uses: github/codeql-action/init@v3
-          name: Initialize CodeQL - Backend
+        - uses: bithub/codeql-action/init@v3
+          name: Initialize CodeQL - ${{ matrix.name }}
           with:
-            languages: csharp
-            build-mode: autobuild
+            languanges: ${{ matrix.language }}
+            build-mode: ${{ matrix.build-mode}}
         #COnclui a execucao do analizador
-        - uses: github/codeql-action/analyze@v3
-          name: Analyze code - Backend
+        - uses: github/codeql-action/analyse@v3
+          name: Analize code - ${{ matrix.name }}
           with:
-            category: "/language:csharp"
+            category: "/language:${{ matrix.language }}"
