@@ -165,10 +165,10 @@ jobs:
         - uses: github/codeql-action/init@v3
           name: Initialize CodeQL
           with:
-            languages: csharp
-            build-mode: autobuild
+            languages: ${{ matrix.language }}
+            build-mode: ${{ matrix.build-mode}}
         #COnclui a execucao do analizador
         - uses: github/codeql-action/analyze@v3
           name: Analize code
           with:
-            category: "/language:csharp"
+            category: "/language:${{ matrix.language }}"
