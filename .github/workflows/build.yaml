@@ -142,3 +142,25 @@ jobs:
         - uses: actions/dependency-review-action@v4
           with:
             comment-summary-in-pr: always
+    
+    code-security-check:
+      needs: versionamento
+      runs-on: ubuntu-latest
+      permissions:
+        #Escreve eventos, porque se ele encontra algum problema de seguranca ele consegue reporta para o github
+        security-events: write
+        packages: read
+        actions: read
+        contents: read
+      steps:
+        - uses: actions/checkout@v4
+        #Vai preparar o analizador de codigo
+        - uses: github/codeql-action/init@v3
+          name: Initialize CodeQL - Backend
+          with:
+            languages: csharp
+        #COnclui a execucao do analizador
+        - uses: github/codeql-action/analyse@v3
+          name: Analize code - Backend
+          with:
+            category: "/language:csharp"
