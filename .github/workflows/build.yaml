@@ -70,15 +70,15 @@ jobs:
             if: github.ref != 'refs/heads/master'
 
           - name: Publish
-            run: dotnet publish src/Cadastro/DZA.Cadastro.Api.csproj --no-restore --no-build --configuration Release --output ./publish
-            if: github.ref == 'refs/heads/master'
+            run: dotnet publish ../src/Cadastro/DZA.Cadastro.Api.csproj --no-restore --no-build --configuration Release --output ./publish
+            if: github.ref != 'refs/heads/master'
                 
           - name: Upload dotnet artifacts
             uses: actions/upload-artifact@v4
             with:
               name: api
               path: ./publish
-            if: github.ref == 'refs/heads/master'
+            if: github.ref != 'refs/heads/master'
 
     backend-lint:
       needs: versionamento
@@ -130,7 +130,7 @@ jobs:
           - name: Test
             run: |
               npm run lint
-            if: github.ref != 'refs/heads/main'
+            if: github.ref != 'refs/heads/master'
       
           - name: Build
             run: |
@@ -151,9 +151,13 @@ jobs:
         pull-requests: write
       steps:
         - uses: actions/checkout@v4
+        
         - uses: actions/dependency-review-action@v4
           with:
             comment-summary-in-pr: always
+            base-ref: master
+            head-ref: master
+      if: github.ref != 'refs/heads/master'
     
     code-security-check:
       needs: versionamento
