@@ -62,11 +62,20 @@ jobs:
           - name: Test
             run: | 
                  dotnet test ./L03.DZA.Project.sln --configuration release --no-restore --no-build --logger trx --results-directory "TestResults"
-              
+          
           - uses: actions/upload-artifact@v4
             with:
               name: dotnet-test-results
               path: TestResults
+
+          - name: Publish
+            run: dotnet publish ./DZA.Cadastro.Api.csproj --no-restore --no-build --configuration Release --output ./publish
+                
+          - name: Upload dotnet artifacts
+            uses: actions/upload-artifact@v4
+            with:
+              name: api
+              path: ./publish
 
     backend-lint:
       needs: versionamento
@@ -173,3 +182,22 @@ jobs:
           name: Analize code
           with:
             category: "/language:${{ matrix.language }}"
+
+    build-docker-image:
+      needs: [versionamento, backend-buils-and-tests]
+      runs-on: ubuntu-latest
+
+      env:
+        version: ${{ needs.versionamento.outputs.version }}
+
+      steps:
+        - uses: actions/checkout@v4
+
+        - uses: actions/download-artifact@v4
+          with:
+            path: app
+            merge-multiple: false
+
+        - name: Build Docker Image
+          run: |
+            docker build -t minha-app2:${{ env.version }}
