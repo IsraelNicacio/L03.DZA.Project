@@ -70,7 +70,7 @@ jobs:
             if: github.ref != 'refs/heads/master'
 
           - name: Publish
-            run: dotnet publish ../src/Cadastro/DZA.Cadastro.Api.csproj --no-restore --no-build --configuration Release --output ./publish
+            run: dotnet publish ./src/Cadastro/DZA.Cadastro.Api/DZA.Cadastro.Api.csproj --no-restore --no-build --configuration Release --output ./publish
             if: github.ref != 'refs/heads/master'
                 
           - name: Upload dotnet artifacts
@@ -151,7 +151,7 @@ jobs:
         pull-requests: write
       steps:
         - uses: actions/checkout@v4
-        
+
         - uses: actions/dependency-review-action@v4
           with:
             comment-summary-in-pr: always
