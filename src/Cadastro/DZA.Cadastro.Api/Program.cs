@@ -6,9 +6,6 @@ builder.Services.RegistesServices();
 builder.Services.RegisterTenant(builder.Configuration);
 
 var app = builder.Build();
-
 app.UseSwaggerConfig();
-
 app.UseApiConfiguration(app.Environment);
-
 app.Run();
