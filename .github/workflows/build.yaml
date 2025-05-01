@@ -38,6 +38,17 @@ jobs:
               release-branch: master
               prefix: v
 
+          - name: Tag the repository
+            env:
+              GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            run: |
+              echo "::notice:: ${{ steps.version.outputs.version }}"
+              git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+              git config --global user.name "${{ github.actor }}"
+              git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
+              git push --tags
+            if: github.ref == 'refs/heads/master'
+
     backend-buils-and-tests:
         needs: versionamento
         runs-on: ubuntu-latest
@@ -75,6 +86,12 @@ jobs:
             run: dotnet publish ./src/Cadastro/DZA.Cadastro.Api/DZA.Cadastro.Api.csproj --no-restore --no-build --configuration Release --output ./publish
             if: github.ref != 'refs/heads/master'
                 
+          - name: Tag published version
+            uses: restackio/update-json-file-action@2.1
+            with:
+              file: ./publish/appsettings.json
+              fields: "{\"MY_APP_VERSION\": \"${{ needs.versioning.outputs.version }}\"}"
+        
           - name: Upload dotnet artifacts
             uses: actions/upload-artifact@v4
             with:
@@ -220,9 +237,9 @@ jobs:
         - name: Tag Docker image as Latest
           run: |
               docker tag ${{ github.repository }}:${{ env.version }} ${{ github.repository }}:latest
-          if: github.ref == 'refs/heads/main'
+          if: github.ref == 'refs/heads/master'
 
-        - name: Docker Login
+        - name: Login to Docker Hub
           uses: docker/login-action@v3
           with: 
             username: ${{ secrets.DOCKER_USERNAME }}
