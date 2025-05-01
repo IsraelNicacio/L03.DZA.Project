@@ -1,0 +1,68 @@
+name: Deploy Application
+
+on: 
+    workflow_run:
+        workflows: ["Build Project"]
+        types:
+            - completed
+
+jobs:
+
+    versionamento:
+        runs-on: ubuntu-latest
+        outputs:
+            versao: ${{ steps.get-version.outputs.versao }}
+            docker-container-registry: ${{ steps.docker-image-registry.outputs.docker-container-registry }}
+
+        steps:
+        - uses: actions/download-artifact@v4
+          with:
+            name: versao
+            path: ./
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            run-id: ${{ github.event.workflow_run.id }}
+
+        - name: Get version from file
+          id: get-version        
+          run: |
+            VALUE=$(cat ./versao.txt)
+            echo "::notice:: $VALUE"
+            echo "versao=$VALUE" >> "$GITHUB_OUTPUT"
+
+        - name: Generate docker image registry
+          id: docker-image-registry
+          run: |           
+            echo "docker-container-registry=${{ vars.DOCKER_CONTAINER_REGISTRY }}/${{ vars.DOCKERHUB_REPOSITORY }}:${{ steps.get-version.outputs.versao }}" >> "$GITHUB_OUTPUT"
+
+    deploy-to-goolge-cloud:
+        name: Deploy to Google Cloud
+        needs: versionamento
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+        environment: staging
+
+        steps:
+            #Autenticacao é o primeiro passo
+            #Verifique a action no marketplace do github para autenticacao no google cloud
+            #Verifique a versao da action na marketplace
+        - uses: google-github-actions/auth@v2
+          with:
+            credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+            project_id: ${{ vars.GCP_PROJECT_ID }}
+
+        #Deploy para o Google Cloud
+        - uses: google-github-actions/deploy-cloudrun@v2
+          id: deploy-to-cloud-run
+          with: 
+            project_id: ${{ vars.GCP_PROJECT_ID }}
+            service: ${{ vars.GCP_RUN_SERVICE }}
+            image: ${{ needs.versionamento.outputs.docker-container-registry }}
+            region: ${{ vars.GCP_RUN_REGION }}
+
+        #Aqui no deploy vamos exibir qual é a versao e a url da aplicacao
+        - name: 'Test the deployment'
+          run: |-
+            echo "::notice:: ${{ steps.deploy-to-cloud-run.outputs.url }}/index.html"
+            curl -I --fail "${{ steps.deploy-to-cloud-run.outputs.url }}/index.html"

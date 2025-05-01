@@ -49,6 +49,17 @@ jobs:
               git push --tags
             if: github.ref == 'refs/heads/master'
 
+          - name: Create File Version
+            run: |
+              echo ${{ steps.version.outputs.version }} > versao.txt
+            if: github.ref == 'refs/heads/master'
+
+          - uses: actions/upload-artifact@v4
+            with:
+              name: versao
+              path: versao.txt
+            if: github.ref == 'refs/heads/master'
+
     backend-buils-and-tests:
         needs: versionamento
         runs-on: ubuntu-latest
@@ -87,11 +98,10 @@ jobs:
             if: github.ref != 'refs/heads/master'
                 
           - name: Tag published version
-            if: false
             uses: restackio/update-json-file-action@2.1
             with:
               file: ./publish/appsettings.json
-              fields: "{\"MY_APP_VERSION\": \"${{ needs.versioning.outputs.version }}\"}"
+              fields: "{\"MY_APP_VERSION\": \"${{ needs.versionamento.outputs.version }}\"}"
         
           - name: Upload dotnet artifacts
             uses: actions/upload-artifact@v4
@@ -233,11 +243,11 @@ jobs:
 
         - name: Build Docker Image
           run: |
-            docker build -t ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3:${{ env.version }} ./src/
+            docker build -t ${{ vars.DOCKERHUB_ACCOUNT_ID }}/${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.version }} ./src/
 
         - name: Tag Docker image as Latest
           run: |
-              docker tag ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3:${{ env.version }} ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3:latest
+              docker tag ${{ vars.DOCKERHUB_ACCOUNT_ID }}/${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.version }} ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3:latest
           if: github.ref == 'refs/heads/master'
 
         - name: Login to Docker Hub
@@ -247,4 +257,4 @@ jobs:
             password: ${{ secrets.DOCKER_PASS }}
 
         - name: Docker Push
-          run: docker push --all-tags ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3
+          run: docker push --all-tags ${{ vars.DOCKERHUB_ACCOUNT_ID }}/${{ vars.DOCKERHUB_REPOSITORY }}
