@@ -209,7 +209,6 @@ jobs:
           run: |
             docker build -t ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3:${{ env.version }} ./src/
 
-
         - name: Docker Login
           uses: docker/login-action@v3
           with: 
