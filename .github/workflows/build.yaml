@@ -237,7 +237,7 @@ jobs:
 
         - name: Tag Docker image as Latest
           run: |
-              docker tag ${{ github.repository }}:${{ env.version }} ${{ github.repository }}:latest
+              docker tag ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3:${{ env.version }} ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3:latest
           if: github.ref == 'refs/heads/master'
 
         - name: Login to Docker Hub
