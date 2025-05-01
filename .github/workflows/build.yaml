@@ -87,6 +87,7 @@ jobs:
             if: github.ref != 'refs/heads/master'
                 
           - name: Tag published version
+            if: false
             uses: restackio/update-json-file-action@2.1
             with:
               file: ./publish/appsettings.json
