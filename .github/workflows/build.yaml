@@ -229,5 +229,4 @@ jobs:
             password: ${{ secrets.DOCKER_PASS }}
 
         - name: Docker Push
-          run: docker push --all-tags ${{ github.repository }}/minha-app3
-          #run: docker push --all-tags ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3
+          run: docker push --all-tags ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3
