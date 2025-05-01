@@ -207,4 +207,4 @@ jobs:
 
         - name: Build Docker Image
           run: |
-            docker build -t minha-app2:${{ env.version }} .
+            docker build -t minha-app2:${{ env.version }} ./src/Dockerfile
