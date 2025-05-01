@@ -1,4 +1,5 @@
 name: Build Project
+run-name: Build ${{ github.repository }} by ${{ github.actor }}
 
 on:
     push:
@@ -34,7 +35,7 @@ jobs:
           - uses: codacy/git-version@2.8.0
             id: version
             with:
-              release-branch: main
+              release-branch: master
               prefix: v
 
     backend-buils-and-tests:
@@ -51,17 +52,18 @@ jobs:
             with:
               dotnet-version: '8.x'
 
-          - name: Restore
+          - name: Restore Packages
             run: | 
-              dotnet restore ./L03.DZA.Project.sln
+              dotnet restore ./L03.DZA.Project.sln --locked-mode
 
-          - name: Build
+          - name: Build Project
             run: | 
                 dotnet build --configuration release --no-restore ./L03.DZA.Project.sln
 
-          - name: Test
+          - name: Test Project
             run: | 
                  dotnet test ./L03.DZA.Project.sln --configuration release --no-restore --no-build --logger trx --results-directory "TestResults"
+            if: github.ref == 'refs/heads/master'
           
           - uses: actions/upload-artifact@v4
             with:
@@ -78,7 +80,7 @@ jobs:
             with:
               name: api
               path: ./publish
-            if: github.ref != 'refs/heads/master'
+            if: github.ref == 'refs/heads/master'
 
     backend-lint:
       needs: versionamento
@@ -119,11 +121,11 @@ jobs:
           - name: Set up Node.js
             uses: actions/setup-node@v4
             with:
-              node-version: "20"
+              node-version: "20.x"
               cache: npm
               cache-dependency-path: ./src/web
 
-          - name: Install dependencies
+          - name: Install Dependencies
             run: |
                 npm ci
       
@@ -136,19 +138,20 @@ jobs:
             run: |
               npm run build
 
-          - uses: actions/upload-artifact@v4
+          - name: Upload Frontend artifacts
+            uses: actions/upload-artifact@v4
             with:
               name: web
               path: ./src/web/dist
+            if: github.ref == 'refs/heads/master'
     
     dependency-check:
       needs: versionamento
       runs-on: ubuntu-latest
-      #Permissoes
       permissions:
         contents: read
-        #Para o dependency-check adicionar comentarios no pull-request
         pull-requests: write
+
       steps:
         - uses: actions/checkout@v4
 
@@ -161,39 +164,44 @@ jobs:
     
     code-security-check:
       needs: versionamento
+      name: Analyze (${{ matrix.language }})
       runs-on: ubuntu-latest
       permissions:
-        #Escreve eventos, porque se ele encontra algum problema de seguranca ele consegue reporta para o github
         security-events: write
         packages: read
         actions: read
         contents: read
 
       strategy:
+        fail-fast: false
         matrix:
           include:
-            # Analyzes C# code by automatically detecting a build
             - name: Backend
               language: csharp
               build-mode: autobuild
+            - name: Frontend
+              language: javascript-typescript
+              build-mode: none
+
       steps:
         - uses: actions/checkout@v4
-        #Vai preparar o analizador de codigo
+        
         - uses: github/codeql-action/init@v3
           name: Initialize CodeQL - ${{ matrix.name }}
           with:
             languages: ${{ matrix.language }}
             build-mode: ${{ matrix.build-mode}}
-        #COnclui a execucao do analizador
+        
         - uses: github/codeql-action/analyze@v3
           name: Analize code
           with:
             category: "/language:${{ matrix.language }}"
+      if: github.ref != 'refs/heads/master'
 
     build-docker-image:
       needs: [versionamento, backend-buils-and-tests]
+      name: Docker
       runs-on: ubuntu-latest
-
       env:
         version: ${{ needs.versionamento.outputs.version }}
 
@@ -209,6 +217,11 @@ jobs:
           run: |
             docker build -t ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3:${{ env.version }} ./src/
 
+        - name: Tag Docker image as Latest
+          run: |
+              docker tag ${{ github.repository }}:${{ env.version }} ${{ github.repository }}:latest
+          if: github.ref == 'refs/heads/main'
+
         - name: Docker Login
           uses: docker/login-action@v3
           with: 
@@ -216,4 +229,5 @@ jobs:
             password: ${{ secrets.DOCKER_PASS }}
 
         - name: Docker Push
-          run: docker push --all-tags ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3
+          run: docker push --all-tags ${{ github.repository }}/minha-app3
+          #run: docker push --all-tags ${{ vars.DOCKERHUB_ACCOUNT_ID }}/minha-app3
